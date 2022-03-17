@@ -41,9 +41,7 @@ class ClassBasedLoginForm extends Component {
              this.setState({username:"",password:""})
          }
      }
-     delHeader = () => {
-            this.setState({show: false});
-          }
+    
     render() { 
         const{username,password,errors} = this.state;
         return (
@@ -73,14 +71,5 @@ class ClassBasedLoginForm extends Component {
         );
     }
 }
-class Child extends React.Component {
-      componentWillUnmount() {
-        alert("You have successfully logged in.");
-      }
-      render() {
-        return (
-          <h1>Hello World!</h1>
-        );
-      }
-    }
+
 export default ClassBasedLoginForm;
