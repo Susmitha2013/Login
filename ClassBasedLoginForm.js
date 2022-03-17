@@ -14,21 +14,26 @@ class ClassBasedLoginForm extends Component {
          let isValid =true;
          const errors ={};
 
-         if (username.trim().length < 6){
-         errors.usernameLength="Username must be of length of 6 or higher";
-         isValid = false;
-         }
-         if (!username.match(/^[a-zA-Z\s]+$/)){
-            errors.usernamePattern="Special Characters are not allowed";
-            isValid = false;
-            }
-            if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)){
-                errors.passwordPattern="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters";
-                isValid = false;
-            }
+      
+        errors.username = this.validateUserName(username);
+        errors.password = this.validatePassword(password);
                 this.setState({errors});
                 return isValid;
      }
+     
+     validateUserName = (username) => 
+     !username 
+     ? "Username must be entered"
+     :!username.match(/^[a-zA-Z\s]+$/) ? "Special Characters are not allowed" 
+     : username.length < 6 ? "Username must be of length of 6 or higher" : "";
+
+     validatePassword = (password)=>
+     !password
+     ? "Password must be enterred"
+     :!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/)
+      ? "Must contain at least one number and one uppercase and lowercase letter"
+    :password.length < 8 ? "Password must be of length of 8 or higher":"";
+
      onSubmit =(e) =>{
          e.preventDefault();
          const isValid = this.formValidation();
@@ -36,6 +41,9 @@ class ClassBasedLoginForm extends Component {
              this.setState({username:"",password:""})
          }
      }
+     delHeader = () => {
+            this.setState({show: false});
+          }
     render() { 
         const{username,password,errors} = this.state;
         return (
@@ -65,5 +73,14 @@ class ClassBasedLoginForm extends Component {
         );
     }
 }
- 
+class Child extends React.Component {
+      componentWillUnmount() {
+        alert("You have successfully logged in.");
+      }
+      render() {
+        return (
+          <h1>Hello World!</h1>
+        );
+      }
+    }
 export default ClassBasedLoginForm;
